@@ -1,0 +1,86 @@
+{
+    "name": "darki73/consul-laravel-sdk",
+    "description": "PHP SDK to communicate with Consul API for Laravel",
+    "version": "1.0.0",
+    "license": "MIT",
+    "keywords": [
+        "consul",
+        "laravel",
+        "sdk"
+    ],
+    "homepage": "https://github.com/darki73/consul-laravel-sdk",
+    "authors": [
+        {
+            "name": "Zhivolupov Ivan",
+            "email": "ivan.zhivolupov@freedomcore.ru",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "ext-json": "*",
+        "guzzlehttp/guzzle": "^7.3",
+        "illuminate/http": "^8.55"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "mockery/mockery": "^1.4",
+        "orchestra/testbench": "^6.0",
+        "phpstan/phpstan": "^0.12.96",
+        "phpunit/phpunit": "^9.0",
+        "sempro/phpunit-pretty-print": "^1.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Consul\\": "src/"
+        },
+        "files": []
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Consul\\Test\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Consul\\Providers\\ConsulServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "psr": [
+            "vendor/bin/php-cs-fixer fix"
+        ],
+        "sa": [
+            "vendor/bin/phpstan"
+        ],
+        "test": [
+            "phpunit --color=always"
+        ],
+        "test:coverage": [
+            "@putenv XDEBUG_MODE=coverage",
+            "phpunit --color=always --coverage-clover=\"output/code-coverage/clover.xml\""
+        ],
+        "test:coverage-text": [
+            "@putenv XDEBUG_MODE=coverage",
+            "phpunit --color=always --coverage-text"
+        ],
+        "test:coverage-gitlab": [
+            "@putenv XDEBUG_MODE=coverage",
+            "phpunit --color=never --coverage-text"
+        ],
+        "test:coverage-html": [
+            "@putenv XDEBUG_MODE=coverage",
+            "phpunit --color=always --coverage-html=\"output/code-coverage\""
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "secure-http": false
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
