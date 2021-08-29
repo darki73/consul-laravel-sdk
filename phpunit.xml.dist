@@ -42,7 +42,7 @@
         <server name="SESSION_DRIVER" value="array"/>
         <server name="TELESCOPE_ENABLED" value="false"/>
         <server name="CONSUL_SERVER_TOKEN" value="anonymous"/>
-        <server name="CONSUL_SERVER_EMULATE" value="false"/>
+        <server name="CONSUL_SERVER_EMULATE" value="true"/>
 
         <env name="PHPUNIT_PRETTY_PRINT_PROGRESS" value="true" />
     </php>
