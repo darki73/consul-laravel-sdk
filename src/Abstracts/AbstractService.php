@@ -30,22 +30,26 @@ abstract class AbstractService
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(?PendingRequest $client = null)
     {
-        $activeConnection = $this->getActiveConnection();
-        $scheme = Arr::get($activeConnection, 'scheme', 'http');
-        $host = Arr::get($activeConnection, 'host', '127.0.0.1');
-        $port = Arr::get($activeConnection, 'port', 8500);
+        if ($client !== null) {
+            $this->client = $client;
+        } else {
+            $activeConnection = $this->getActiveConnection();
+            $scheme = Arr::get($activeConnection, 'scheme', 'http');
+            $host = Arr::get($activeConnection, 'host', '127.0.0.1');
+            $port = Arr::get($activeConnection, 'port', 8500);
 
 
-        $this->client = Http::baseUrl(sprintf(
-            '%s://%s:%d/v1',
-            $scheme,
-            $host,
-            $port,
-        ))->withHeaders([
-            'X-Consul-Token'    =>  Arr::get($activeConnection, 'access_token') ?? config('consul.access_token', ''),
-        ])->timeout(config('consul.timeout', 15));
+            $this->client = Http::baseUrl(sprintf(
+                '%s://%s:%d/v1',
+                $scheme,
+                $host,
+                $port,
+            ))->withHeaders([
+                'X-Consul-Token'    =>  Arr::get($activeConnection, 'access_token') ?? config('consul.access_token', ''),
+            ])->timeout(config('consul.timeout', 15));
+        }
     }
 
     /**
@@ -173,7 +177,9 @@ abstract class AbstractService
         $responseBody = $response->body();
         if ($responseBody === '1' || $responseBody === '0') {
             return $responseBody === '1';
-        } elseif ($responseBody === '{}' || $responseBody === "") {
+        }
+
+        if ($responseBody === '{}' || $responseBody === "") {
             return [];
         }
 
