@@ -3,6 +3,7 @@
 namespace Consul\Abstracts;
 
 use Exception;
+use Consul\Helpers\Str;
 use Illuminate\Support\Arr;
 use Consul\Helpers\OptionsResolver;
 use Illuminate\Support\Facades\App;
@@ -104,19 +105,24 @@ abstract class AbstractService
      */
     protected function processPutRequest(string $path, mixed $body = null, array $parameters = []): mixed
     {
-        if (count($parameters) === 0) {
-            return $this->processRequest($this->client()->put($path, $body), $parameters);
-        }
-        $content = [
-            'query'     =>  $parameters,
+        $requestOptions = [
+            'headers'       =>  [],
+            'query'         =>  $parameters,
         ];
-        if (is_array($body)) {
-            $content['form_params'] = $body;
+
+        if ($body === null) {
+            Arr::forget($requestOptions, 'body');
+        } elseif (Str::isJson($body)) {
+            $requestOptions['headers']['Content-Type'] = 'application/json';
+            Arr::set($requestOptions, 'json', json_decode($body, true));
+        } elseif (is_array($body) && count($body) > 0) {
+            $requestOptions['headers']['Content-Type'] = 'application/json';
+            Arr::set($requestOptions, 'json', $body);
         } else {
-            $content['body'] = $body;
+            Arr::set($requestOptions, 'body', $body);
         }
 
-        return $this->processSendRequest('PUT', $path, $content, $parameters);
+        return $this->processSendRequest('PUT', $path, $requestOptions, $parameters);
     }
 
     /**

@@ -28,14 +28,14 @@ interface KeyValueInterface
      * This endpoint updates the value of the specified key.
      * If no key exists at the given path, the key will be created.
      *
-     * @param string          $key
-     * @param string|int|bool $value
-     * @param array           $options
+     * @param string $key
+     * @param mixed  $value
+     * @param array  $options
      *
      * @return bool
      * @throws RequestException
      */
-    public function put(string $key, string|int|bool $value, array $options = []): bool;
+    public function put(string $key, mixed $value, array $options = []): bool;
 
     /**
      * This endpoint deletes a single key or all keys sharing a prefix.

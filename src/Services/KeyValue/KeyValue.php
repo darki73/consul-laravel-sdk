@@ -26,7 +26,7 @@ class KeyValue extends AbstractService implements KeyValueInterface
     /**
      * @inheritDoc
      */
-    public function put(string $key, string|int|bool $value, array $options = []): bool
+    public function put(string $key, mixed $value, array $options = []): bool
     {
         return $this->processPutRequest(sprintf('kv/%s', $key), $value, $this->resolveOptions($options, [
             'dc', 'flags', 'cas', 'acquire',
