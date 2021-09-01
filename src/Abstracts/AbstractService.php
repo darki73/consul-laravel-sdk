@@ -122,6 +122,16 @@ abstract class AbstractService
             Arr::set($requestOptions, 'body', $body);
         }
 
+        if (Arr::exists($requestOptions, 'body')) {
+            $bodyValue = Arr::get($requestOptions, 'body');
+            if (
+                is_array($bodyValue) &&
+                count($bodyValue) === 0
+            ) {
+                Arr::forget($requestOptions, 'body');
+            }
+        }
+
         return $this->processSendRequest('PUT', $path, $requestOptions, $parameters);
     }
 
