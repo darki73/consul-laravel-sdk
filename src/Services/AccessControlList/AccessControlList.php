@@ -53,7 +53,7 @@ class AccessControlList extends AbstractService implements AccessControlListInte
      */
     public function createToken(array $options = []): array
     {
-        return $this->processPutRequest('acl/token', null, $this->resolveOptions($options, [
+        return $this->processPutRequest('acl/token', $this->resolveOptions($options, [
             'AccessorID', 'SecretID', 'Description', 'Policies', 'Roles',
             'ServiceIdentities', 'NodeIdentities', 'Local', 'ExpirationTime',
             'ExpirationTTL', 'Namespace',

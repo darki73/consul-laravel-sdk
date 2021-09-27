@@ -22,6 +22,7 @@ class KeyValueHandler extends AbstractHandler
     {
         [$url, $method, $parameters] = $this->requestParameters();
         $key = $this->getKeyFromUrl($url);
+
         return match ($method) {
             'GET'       =>  $this->handleGetRequest($key, $parameters),
             'PUT'       =>  $this->handlePutRequest($key, $parameters, $this->request->body()),
