@@ -81,7 +81,7 @@ class AccessControlList extends AbstractService implements AccessControlListInte
      */
     public function updateToken(string $accessorID, array $options = []): array
     {
-        return $this->processPutRequest(sprintf('acl/token/%s', $accessorID), null, $this->resolveOptions($options, [
+        return $this->processPutRequest(sprintf('acl/token/%s', $accessorID), $this->resolveOptions($options, [
             'AccessorID', 'SecretID', 'Description', 'Policies', 'Roles',
             'ServiceIdentities', 'NodeIdentities', 'Local', 'ExpirationTime',
             'ExpirationTTL', 'Namespace',
@@ -122,7 +122,7 @@ class AccessControlList extends AbstractService implements AccessControlListInte
      */
     public function createPolicy(array $options = []): array
     {
-        return $this->processPutRequest('acl/policy', null, $this->resolveOptions($options, [
+        return $this->processPutRequest('acl/policy', $this->resolveOptions($options, [
             'Name', 'Description', 'Rules', 'Datacenters', 'Namespace',
         ]));
     }
@@ -148,7 +148,7 @@ class AccessControlList extends AbstractService implements AccessControlListInte
      */
     public function updatePolicy(string $accessorID, array $options = []): array
     {
-        return $this->processPutRequest(sprintf('acl/policy/%s', $accessorID), null, $this->resolveOptions($options, [
+        return $this->processPutRequest(sprintf('acl/policy/%s', $accessorID), $this->resolveOptions($options, [
             'Name', 'Description', 'Rules', 'Datacenters', 'Namespace',
         ]));
     }
@@ -174,7 +174,7 @@ class AccessControlList extends AbstractService implements AccessControlListInte
      */
     public function createRole(array $options = []): array
     {
-        return $this->processPutRequest('acl/role', null, $this->resolveOptions($options, [
+        return $this->processPutRequest('acl/role', $this->resolveOptions($options, [
             'Name', 'Description', 'Policies', 'ServiceIdentities', 'NodeIdentities',
             'Namespace',
         ]));
@@ -201,7 +201,7 @@ class AccessControlList extends AbstractService implements AccessControlListInte
      */
     public function updateRole(string $accessorID, array $options = []): array
     {
-        return $this->processPutRequest(sprintf('acl/role/%s', $accessorID), null, $this->resolveOptions($options, [
+        return $this->processPutRequest(sprintf('acl/role/%s', $accessorID), $this->resolveOptions($options, [
             'Name', 'Description', 'Policies', 'ServiceIdentities', 'NodeIdentities', 'Namespace',
         ]));
     }

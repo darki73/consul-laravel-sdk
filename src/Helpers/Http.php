@@ -2,6 +2,8 @@
 
 namespace Consul\Helpers;
 
+use Illuminate\Support\Arr;
+use Illuminate\Http\Client\Response;
 use Consul\Exceptions\RequestException;
 
 /**
@@ -97,5 +99,24 @@ class Http
     public static function statusCodeToException(int $statusCode): RequestException
     {
         return new RequestException(self::statusCodeToMessage($statusCode), $statusCode);
+    }
+
+    /**
+     * Create new exception from request
+     * @param Response $response
+     *
+     * @return RequestException
+     */
+    public static function responseToException(Response $response): RequestException
+    {
+        $statusMessage = self::statusCodeToMessage($response->status());
+        $requestUrl = Arr::get($response->handlerStats(), 'url');
+        $exceptionBody = $response->body();
+        return new RequestException(
+            statusCode: $response->status(),
+            statusMessage: $statusMessage,
+            responseMessage: $exceptionBody,
+            requestUrl: $requestUrl
+        );
     }
 }

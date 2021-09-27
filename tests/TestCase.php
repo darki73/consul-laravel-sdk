@@ -149,7 +149,6 @@ abstract class TestCase extends OrchestraTestCase
     protected function expectNotFound(): void
     {
         $this->expectExceptionCode(404);
-        $this->expectExceptionMessage('Not Found');
         $this->expectException(RequestException::class);
     }
 
@@ -160,7 +159,6 @@ abstract class TestCase extends OrchestraTestCase
     protected function expectInternalServerError(): void
     {
         $this->expectExceptionCode(500);
-        $this->expectExceptionMessage('Internal Server Error');
         $this->expectException(RequestException::class);
     }
 }

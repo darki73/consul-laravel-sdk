@@ -188,7 +188,7 @@ abstract class AbstractService
     private function processRequest(Response $response, array $parameters = []): mixed
     {
         if ($response->failed()) {
-            throw \Consul\Helpers\Http::statusCodeToException($response->status());
+            throw \Consul\Helpers\Http::responseToException($response);
         }
         $responseBody = $response->body();
         if ($responseBody === '1' || $responseBody === '0') {
